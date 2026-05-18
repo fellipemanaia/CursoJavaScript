@@ -58,3 +58,48 @@
 // }else{
 //     console.log("Muitos itens")
 // }
+
+// const nota=5;
+
+// if(nota >= 7){
+//     if(nota ==10){
+//         console.log("Aprovado com estrela")
+//     }else{
+//         console.log("Aprovado")
+//     }
+// }else {
+//     console.log("Reprovado")
+// }
+
+
+// let dispositivo = prompt("Voce esta usando tablet,celular ou computador? ").toLowerCase()
+// if(dispositivo=="celular" || dispositivo == "tablet"){
+//     console.log("Adaptando para modo mobile...")
+// }else if (dispositivo=="computador"){
+//     console.log("Adaptando para modo desktop")
+// }else{
+//     console.log("Dispositivo não encontrado")
+// }
+
+
+
+let tema = prompt("digite um tema:  claro, escuro, azul ou digite sair").toLowerCase();
+
+switch(tema){
+    case "claro":
+        console.log("tema claro ativado")
+        break
+    case "escuro":
+        console.log("tema escuro ativado")
+        document.body.style.backgroundColor = "#000000"
+        break
+    case "azul":
+        console.log("tema azul ativado")
+        document.body.style.backgroundColor = "#0000FF"
+        break
+    case "sair":
+        break
+    default:
+        console.log("Opção invalida")
+        break
+}
