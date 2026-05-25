@@ -1,0 +1,20 @@
+
+body{
+    background-color: rgb(56, 55, 55);
+
+}
+#caixa{
+    color: white;
+    width: 300px;
+    background-color: black;
+    text-align: center;
+    margin: 300px auto;
+    padding: 20px;
+    border: 3px solid red;
+    border-radius: 5%;
+}
+
+button{
+    padding: 10px 15px;
+    cursor: pointer; /*transforma o cursor em maozinha*/
+}

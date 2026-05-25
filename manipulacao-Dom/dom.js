@@ -76,13 +76,58 @@
 
 
 //evento mouse
-const trocando = document.getElementById("troca-cor")
-const botao = document.getElementById("btn")
-//mouseover -> quando o mouse passa por cima do elemento
-trocando.addEventListener("mouseover",()=>{
-    if(trocando.style.backgroundColor==="#FF0000"){
-        trocando.style.backgroundColor="rgb(41,41,40)"
-    }else{
-        trocando.style.backgroundColor="#FF0000"
-    }
+// const trocando = document.getElementById("troca-cor")
+// const botao = document.getElementById("btn")
+// //mouseover -> quando o mouse passa por cima do elemento
+// trocando.addEventListener("mouseover",()=>{
+//     trocando.style.backgroundColor==="#FF0000"
+// })
+
+// trocando.addEventListener("mouseout", ()=>{
+//     botao.style.backgroundColor="#0000FF"
+//     trocando.style.backgroundColor=""
+// })
+
+
+
+//pegar a posição do mouse
+// document.addEventListener("mousemove",(evento)=>{
+//     console.log("Posição de X", evento.clientY, "Posição de Y",evento.clientY)
+// })
+
+
+// //evento formulario
+// const form = document.getElementById("form")
+// // form.addEventListener("submit",(evento)=>{
+// //     evento.preventDefault()//impede o recarregamento de pagina
+// //     const nome = document.getElementById("nome").value
+// //     console.log("Nome: "+ nome)
+// // })
+
+
+// const novoElemento = document.createElement("p")
+// novoElemento.innerText="Elemento novo criado"
+// form.appendChild(novoElemento)
+
+// const botao = document.createElement("button")
+// botao.innerText = "Excluir elemento"
+// form.appendChild(botao)
+// botao.addEventListener("click",(e)=>{
+//     e.preventDefault()
+//     novoElemento.remove()
+
+//     //form.removeChild(novoElemento)
+// })
+
+
+
+const input = document.getElementById("input")
+const add = document.getElementById("add")
+const lista =document.getElementById("lista")
+add.addEventListener("click",()=>{
+    const valor = input.value;
+    const li = document.createElement("li")
+    li.innerText=valor
+    lista.appendChild(li)
+    input.value=""
 })
