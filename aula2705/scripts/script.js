@@ -17,5 +17,52 @@ function mostrarTarefas(){
     for(let i=0;i<tarefas.length;i++){
         const li = document.createElement("li")
         li.innerText=tarefas[i]
+
+        const botaoRemover = document.createElement("button")
+        botaoRemover.innerText="🗑️"
+        botaoRemover.className="botao-remover"
+        botaoRemover.addEventListener("click",()=>{
+            removerTarefas(i)
+        })
+        li.appendChild(botaoRemover)
+        listaTarefas.appendChild(li)
     }
 }
+
+function removerTarefas(posTarefa){
+    //splice (posição, quantidade de itens para remover)
+    tarefas.splice(posTarefa,1)
+    //atualiza o local storage
+    salvarTarefas()
+    //atualiza a tela
+    mostrarTarefas()
+}
+
+function adicionarTarefa(){
+    const valorTarefa = inputTarefa.value
+
+    if(valorTarefa.trim()===""){
+        alert("digite uma Tarefa!")
+        return
+    }
+
+    tarefas.push(valorTarefa)
+    inputTarefa.value=""
+    salvarTarefas()
+    mostrarTarefas()
+}
+function carregarTarefas(){
+    //pega as tarefas e armazena na variavel tarefasSalvas
+    const tarefasSalvas = localStorage.getItem("tarefas")
+    
+    //se existir alguma coisa dentro de tarefasSalvas
+    //entao converte a tarefa e mostra na tela
+    if(tarefasSalvas){
+        //transforma o texto que esta no localStorage em array
+        tarefas=JSON.parse(tarefasSalvas)
+        mostrarTarefas()
+    }    
+}
+
+botaoAdicionar.addEventListener("click",adicionarTarefa)
+carregarTarefas()

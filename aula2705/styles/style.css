@@ -30,3 +30,8 @@ body{
     text-align: center;
     
 }
+.botao-remover{
+    border: none;
+    background-color: none;
+    cursor: pointer;
+}
