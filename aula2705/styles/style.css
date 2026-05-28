@@ -35,3 +35,16 @@ body{
     background-color: none;
     cursor: pointer;
 }
+li{
+    list-style: none; /*remove o estilo da lista(bolinha)*/
+    background-color: #EEEEEE;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;/*coloca espaço entre os elementos*/
+    text-align: center;
+}
+#lista-tarefas{
+    padding: 0;
+}
