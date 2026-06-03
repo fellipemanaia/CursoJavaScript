@@ -1,70 +1,100 @@
-const inputPedido = document.getElementById("inputPedido")
-const botaoAdicionar = document.getElementById("btnAdicionar")
-const listaPedidos = document.getElementById("listaPedidos")
-const botaoAtualizar = document.getElementById("btnAtender")
+const inputPedido = document.getElementById("inputPedido");
+const btnAdicionar = document.getElementById("btnAdicionar");
+const listaPedidos = document.getElementById("listaPedidos");
+const btnAtender = document.getElementById("btnAtender");
+const pedidoAtual = document.getElementById("pedidoAtual");
 
-let pedidos = []
-//função para salvar pedidos no local storage
-function salvarPedidos(){
-    /*
-        localStorage-> armazenamento local do navegador
-        satItem-> salva no armazenamento o conteudo recebido
-        JSON.stringfy(tarefa) -> ega a lista de pedidos, converte para texto
-    */
-    localStorage.setItem("pedidos",JSON.stringify(pedidos))
+let pedidos = [];
+
+// carregando dados do localStorage
+const dados = localStorage.getItem("pedidos");
+
+// se existir dados no localstorage
+if(dados) {
+    // a lista de pedidos recebe os dados convertidos em JSON
+    pedidos = JSON.parse(dados);
+
+    //! CHAMAR A FUNÇÃO DE RENDERIZAR/mostrar na tela
+    renderizar();
 }
-function mostrarPedidos(){
-    listaPedidos.innerHTML=""
-    for(let i=0;i<pedidos.length;i++){
-        const li = document.createElement("li")
-        li.innerText=pedidos[i]
 
-        const botaoRemover = document.createElement("button")
-        botaoRemover.innerText="🗑️"
-        botaoRemover.className="botao-remover"
-        botaoRemover.addEventListener("click",()=>{
-            removerPedidos(i)
+function salvar() {
+    // a lista é convertida em texto e armazenada dentro do localStorage
+    localStorage.setItem("pedidos", JSON.stringify(pedidos));
+}
+
+
+// função de mostrar as informações na tela
+function renderizar() {
+    listaPedidos.innerHTML = "";
+
+    pedidos.forEach((pedido, posicao) => {
+        const li = document.createElement("li");
+        li.innerText = pedido.texto;
+
+        if(pedido.concluido) {
+            li.style.textDecoration = "line-through";
+        }
+
+        li.addEventListener("click", () => {
+            li.style.textDecoration = "line-through";
         })
 
-        li.appendChild(botaoRemover)
-        listaPedidos.appendChild(li)
+        // botão remover
+        const btnRemover = document.createElement("button");
+        btnRemover.innerText = "❌"; // windows + "." abre a caixinha de emojis
+
+        btnRemover.addEventListener("click", () => {
+            pedidos.splice(posicao, 1);
+            salvar();
+            renderizar();
+        })
+
+        li.appendChild(btnRemover);
+        listaPedidos.appendChild(li);
+    })
+}
+
+// evento para adicionar pedido
+btnAdicionar.addEventListener("click", () => {
+    const textoDigitado = inputPedido.value;
+
+    if(textoDigitado === "") {
+        alert("Digite um pedido!");
+        return;
     }
-}
 
-function removerPedidos(posPedido){
-    //splice (posição, quantidade de itens para remover)
-    pedidos.splice(posPedido,1)
-    //atualiza o local storage
-    salvarPedidos()
-    //atualiza a tela
-    mostrarPedidos()
-}
+    pedidos.push({
+        texto: textoDigitado,
+        concluido: false
+    })
 
-function adicionarPedido(){
-    const valorPedido = inputPedido.value
+    console.log(pedidos)
 
-    if(valorPedido.trim()===""){
-        alert("digite uma Tarefa!")
-        return
+    salvar();
+    renderizar();
+
+    pedidoAtual.innerText = "Nenhum pedido sendo atendido";
+    inputPedido.value = "";
+})
+
+// evento do botão de atender / marcar como concluído
+btnAtender.addEventListener("click", () => {
+
+    // encontrar o primeiro elemento que NÃO está concluído
+    const proximo = pedidos.find(pedido => pedido.concluido == false);
+    console.log(proximo)
+
+    // se NÃO existir nada dentro de próximo
+    if(!proximo) {
+        pedidoAtual.innerText = "Todos os pedidos já foram atendidos";
     }
 
-    pedidos.push(valorPedido)
-    inputPedido.value=""
-    salvarPedidos()
-    mostrarPedidos()
-}
-function carregarPedidos(){
-    //pega as pedidos e armazena na variavel pedidosSalvos
-    const pedidosSalvos = localStorage.getItem("pedidos")
-    
-    //se existir alguma coisa dentro de pedidosSalvos
-    //entao converte a tarefa e mostra na tela
-    if(pedidosSalvos){
-        //transforma o texto que esta no localStorage em array
-        pedidos=JSON.parse(pedidosSalvos)
-        mostrarPedidos()
-    }    
-}
+    // marcar como concluído
+    proximo.concluido = true;
 
-botaoAdicionar.addEventListener("click",adicionarPedido)
-carregarPedidos()
+    pedidoAtual.innerText = "Atendido: " + proximo.texto;
+
+    salvar();
+    renderizar();
+})
